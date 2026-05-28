@@ -592,64 +592,50 @@
       }
     }
 }
-  /* Styling da Seção de Eventos */
-.event-section {
-  background-color: #fff8f6; /* Um tom bem suave que combine com doceria */
-  border: 2px dashed #ffb6c1; /* Borda tracejada charmosa */
-  border-radius: 16px;
-  padding: 24px;
-  margin: 30px 16px;
-  text-align: center;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+ /* Alinhamento dos botões no cabeçalho */
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px; /* Espaço certinho entre o botão de eventos e o carrinho */
 }
 
-.event-section h3 {
-  color: #d87093; /* Cor destaque dos títulos */
-  font-size: 1.3rem;
-  margin-bottom: 8px;
-}
-
-.event-section p {
-  color: #666;
-  font-size: 0.9rem;
-  line-height: 1.5;
-  margin-bottom: 18px;
-}
-
-.event-btn {
-  display: inline-block;
-  background-color: #ff69b4; /* Cor vibrante do botão */
-  color: #fff;
+/* Estilo do novo botão de eventos do topo */
+.header-event-btn {
+  display: inline-flex;
+  align-items: center;
+  background-color: #fff0f5; /* Fundo rosa bem clarinho e delicado */
+  color: #d87093; /* Letras em tom rosa escuro elegante */
+  border: 1px solid #ffb6c1;
   text-decoration: none;
-  padding: 12px 24px;
+  padding: 6px 12px;
+  font-size: 0.85rem;
   font-weight: bold;
-  border-radius: 50px;
-  font-size: 0.95rem;
-  transition: transform 0.2s, background-color 0.2s;
-  box-shadow: 0 4px 15px rgba(255, 105, 180, 0.3);
+  border-radius: 20px;
+  transition: all 0.2s ease;
 }
 
-.event-btn:hover {
-  background-color: #ff1493;
-  transform: translateY(-2px);
+.header-event-btn:hover {
+  background-color: #ff69b4;
+  color: #fff;
+  border-color: #ff69b4;
 }
 
-/* Ajuste do botão para celulares menores */
+/* Ajuste responsivo para celulares */
 @media (max-width: 480px) {
-  .event-section {
-    padding: 18px;
-    margin: 24px 12px;
+  .header-event-btn {
+    padding: 6px 10px;
+    font-size: 0.78rem; /* Diminui levemente no celular para caber tudo perfeito */
   }
-  .event-btn {
-    width: 100%;
-    box-sizing: border-box;
-    font-size: 0.88rem;
+  .cart-btn {
+    padding: 6px 10px;
+    font-size: 0.78rem;
   }
 }
 </style>
 </head>
 <body>
 
+<!-- ═══ HEADER ═══ -->
 <!-- ═══ HEADER ═══ -->
 <header>
   <div class="header-inner">
@@ -660,10 +646,17 @@
         <div class="logo-sub">Bolos & Cupcakes</div>
       </div>
     </a>
-    <button class="cart-btn" onclick="toggleCart()">
-      🛒 Carrinho
-      <span class="cart-count hidden" id="cartCount">0</span>
-    </button>
+    
+    <!-- ÁREA DE BOTÕES DA DIREITA -->
+    <div class="header-actions">
+      <a href="https://wa.me/5513981642158?text=Ol%C3%A1%20V%C3%A2nia!%20Acessei%20o%20seu%20card%C3%A1pio%20digital%20e%20gostaria%20de%20verificar%20a%20disponibilidade%20para%20um%20evento.%20Pode%20me%20passar%20mais%20informa%C3%A7%C3%B5es%3F" target="_blank" class="header-event-btn" title="Solicitar Orçamento de Evento">
+        🎉 Eventos
+      </a>
+      <button class="cart-btn" onclick="toggleCart()">
+        🛒 Carrinho
+        <span class="cart-count hidden" id="cartCount">0</span>
+      </button>
+    </div>
   </div>
 </header>
 
@@ -695,15 +688,6 @@
   <strong>Formigota – Bolos & Cupcakes</strong><br>
   Feito com carinho 🍓 Encomendas via WhatsApp
 </footer>
-
-  <!-- SEÇÃO DE EVENTOS -->
-<div class="event-section">
-  <h3>🎉 Vai fazer um evento?</h3>
-  <p>Leve os doces da Formigota para a sua festa! Clique abaixo para verificar nossa disponibilidade de data e solicitar um orçamento.</p>
-  <a href="https://wa.me/55DDDSEUNUMERO?text=Ol%C3%A1%20V%C3%A2nia!%20Acessei%20o%20seu%20card%C3%A1pio%20digital%20e%20gostaria%20de%20verificar%20a%20disponibilidade%20para%20um%20evento.%20Pode%20me%20passar%20mais%20informa%C3%A7%C3%B5es%3F" target="_blank" class="event-btn">
-    ✨ Solicitar Orçamento para Evento
-  </a>
-</div>
 
 <!-- ═══ OVERLAY ═══ -->
 <div class="overlay" id="overlay" onclick="closeAll()"></div>
