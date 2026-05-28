@@ -1,0 +1,1198 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Formigota – Bolos & Cupcakes</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --off-white: #faf7f4;
+    --cream: #f5efe8;
+    --rose: #d4848a;
+    --rose-light: #e8b4b8;
+    --rose-pale: #f5dde0;
+    --choco: #6b3f2a;
+    --choco-light: #a0674e;
+    --gold: #c9963a;
+    --gold-light: #e8b96a;
+    --text: #2d1f17;
+    --text-muted: #8c6b5a;
+    --card-shadow: 0 4px 24px rgba(107,63,42,0.08);
+    --card-shadow-hover: 0 8px 32px rgba(107,63,42,0.14);
+    --radius: 16px;
+    --radius-sm: 10px;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Poppins', sans-serif;
+    background: var(--off-white);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  /* ── HEADER ── */
+  header {
+    background: var(--off-white);
+    border-bottom: 1px solid rgba(212,132,138,0.18);
+    position: sticky; top: 0; z-index: 100;
+    backdrop-filter: blur(8px);
+  }
+  .header-inner {
+    max-width: 1100px; margin: 0 auto;
+    padding: 0 24px;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 68px;
+  }
+  .logo {
+    display: flex; align-items: center; gap: 10px;
+    text-decoration: none;
+  }
+  .logo-icon {
+    width: 40px; height: 40px;
+    background: linear-gradient(135deg, var(--rose), var(--choco-light));
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px;
+  }
+  .logo-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem; font-weight: 600;
+    color: var(--choco);
+    line-height: 1;
+  }
+  .logo-sub {
+    font-size: 0.65rem; font-weight: 300;
+    color: var(--text-muted); letter-spacing: .08em; text-transform: uppercase;
+  }
+  .cart-btn {
+    position: relative;
+    background: var(--choco);
+    color: white;
+    border: none; cursor: pointer;
+    border-radius: 50px;
+    padding: 10px 20px;
+    font-family: 'Poppins', sans-serif;
+    font-size: .85rem; font-weight: 500;
+    display: flex; align-items: center; gap: 8px;
+    transition: background .2s, transform .15s;
+  }
+  .cart-btn:hover { background: var(--choco-light); transform: scale(1.02); }
+  .cart-count {
+    background: var(--gold);
+    color: white;
+    border-radius: 50%;
+    width: 20px; height: 20px;
+    font-size: .7rem; font-weight: 600;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .cart-count.hidden { display: none; }
+
+  /* ── HERO ── */
+  .hero {
+    background: linear-gradient(135deg, var(--cream) 0%, var(--rose-pale) 100%);
+    padding: 60px 24px 48px;
+    text-align: center;
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: '🎂';
+    position: absolute; font-size: 180px; opacity: .04;
+    top: -20px; right: -30px; transform: rotate(-15deg);
+    pointer-events: none;
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    color: var(--choco);
+    line-height: 1.15;
+  }
+  .hero h1 em { color: var(--rose); font-style: italic; }
+  .hero p {
+    margin-top: 12px;
+    font-size: .95rem; font-weight: 300;
+    color: var(--text-muted);
+    max-width: 420px; margin-inline: auto;
+    line-height: 1.7;
+  }
+  .hero-badge {
+    display: inline-block;
+    margin-top: 20px;
+    background: white;
+    border: 1px solid var(--rose-light);
+    color: var(--rose);
+    font-size: .78rem; font-weight: 500;
+    padding: 6px 16px;
+    border-radius: 50px;
+    letter-spacing: .04em;
+  }
+
+  /* ── FILTROS ── */
+ .filters-wrap {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 28px 24px 0;
+    display: flex;
+    justify-content: center; /* Centraliza o bloco na tela */
+  }
+  .filters {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center; /* Centraliza os botões internamente */
+    align-items: center;
+  }
+  .filter-btn {
+    background: white;
+    border: 1.5px solid var(--rose-light);
+    color: var(--text-muted);
+    border-radius: 50px;
+    padding: 7px 18px;
+    font-family: 'Poppins', sans-serif;
+    font-size: .82rem; font-weight: 500;
+    cursor: pointer;
+    transition: all .2s;
+  }
+  .filter-btn:hover { border-color: var(--rose); color: var(--rose); }
+  .filter-btn.active {
+    background: var(--rose);
+    border-color: var(--rose);
+    color: white;
+  }
+
+  /* ── PRODUTOS ── */
+  .products-wrap {
+    max-width: 1100px; margin: 0 auto;
+    padding: 24px 24px 60px;
+  }
+  .section-label {
+    font-size: .72rem; font-weight: 600;
+    text-transform: uppercase; letter-spacing: .12em;
+    color: var(--text-muted);
+    margin-bottom: 16px;
+  }
+  .products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 20px;
+  }
+  .product-card {
+    background: white;
+    border-radius: var(--radius);
+    box-shadow: var(--card-shadow);
+    overflow: hidden;
+    transition: transform .2s, box-shadow .2s;
+    display: flex; flex-direction: column;
+  }
+  .product-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--card-shadow-hover);
+  }
+  .product-img {
+    height: 180px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 72px;
+    position: relative;
+  }
+  .product-tag {
+    position: absolute; top: 12px; left: 12px;
+    background: var(--rose-pale);
+    color: var(--rose);
+    font-size: .65rem; font-weight: 600;
+    text-transform: uppercase; letter-spacing: .06em;
+    padding: 3px 10px; border-radius: 50px;
+  }
+  .product-body {
+    padding: 18px 18px 20px;
+    flex: 1; display: flex; flex-direction: column;
+  }
+  .product-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.05rem; font-weight: 600;
+    color: var(--choco);
+    line-height: 1.3;
+  }
+  .product-desc {
+    font-size: .78rem; font-weight: 300;
+    color: var(--text-muted);
+    margin-top: 5px; line-height: 1.6;
+    flex: 1;
+  }
+  .product-footer {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-top: 14px;
+  }
+  .product-price {
+    font-size: 1.1rem; font-weight: 600;
+    color: var(--choco);
+  }
+  .product-price span {
+    font-size: .75rem; font-weight: 400;
+    color: var(--text-muted);
+  }
+  .add-btn {
+    background: linear-gradient(135deg, var(--gold), var(--gold-light));
+    color: white;
+    border: none; cursor: pointer;
+    border-radius: var(--radius-sm);
+    padding: 9px 16px;
+    font-family: 'Poppins', sans-serif;
+    font-size: .82rem; font-weight: 600;
+    transition: opacity .2s, transform .15s;
+  }
+  .add-btn:hover { opacity: .88; transform: scale(1.04); }
+
+  /* ── OVERLAY ── */
+  .overlay {
+    position: fixed; inset: 0;
+    background: rgba(45,31,23,.45);
+    z-index: 200; opacity: 0; pointer-events: none;
+    transition: opacity .3s;
+  }
+  .overlay.open { opacity: 1; pointer-events: all; }
+
+  /* ── CARRINHO LATERAL ── */
+  .cart-panel {
+    position: fixed; top: 0; right: 0;
+    width: min(420px, 100vw); height: 100dvh;
+    background: var(--off-white);
+    z-index: 201;
+    display: flex; flex-direction: column;
+    transform: translateX(100%);
+    transition: transform .35s cubic-bezier(.4,0,.2,1);
+    box-shadow: -8px 0 40px rgba(45,31,23,.12);
+  }
+  .cart-panel.open { transform: translateX(0); }
+  .cart-header {
+    padding: 20px 24px;
+    border-bottom: 1px solid var(--rose-pale);
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .cart-header h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.25rem; color: var(--choco);
+  }
+  .close-btn {
+    background: var(--cream); border: none; cursor: pointer;
+    width: 36px; height: 36px; border-radius: 50%;
+    font-size: 1.1rem;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--text-muted); transition: background .2s;
+  }
+  .close-btn:hover { background: var(--rose-pale); }
+  .cart-items {
+    flex: 1; overflow-y: auto; padding: 16px 24px;
+  }
+  .cart-empty {
+    text-align: center; padding: 48px 0;
+    color: var(--text-muted); font-size: .9rem;
+  }
+  .cart-empty .big { font-size: 48px; margin-bottom: 12px; }
+  .cart-item {
+    background: white;
+    border-radius: var(--radius-sm);
+    padding: 14px 16px;
+    margin-bottom: 10px;
+    display: flex; align-items: center; gap: 12px;
+    box-shadow: 0 2px 10px rgba(107,63,42,.06);
+  }
+  .ci-icon { font-size: 32px; }
+  .ci-info { flex: 1; }
+  .ci-name {
+    font-size: .88rem; font-weight: 600; color: var(--choco);
+  }
+  .ci-price { font-size: .8rem; color: var(--text-muted); }
+  .ci-controls {
+    display: flex; align-items: center; gap: 6px;
+  }
+  .qty-btn {
+    width: 28px; height: 28px;
+    border-radius: 50%; border: 1.5px solid var(--rose-light);
+    background: white; cursor: pointer;
+    font-size: .9rem; color: var(--rose);
+    display: flex; align-items: center; justify-content: center;
+    transition: all .15s;
+  }
+  .qty-btn:hover { background: var(--rose); color: white; border-color: var(--rose); }
+  .qty-num {
+    width: 24px; text-align: center;
+    font-size: .88rem; font-weight: 600; color: var(--choco);
+  }
+  .remove-btn {
+    background: none; border: none; cursor: pointer;
+    color: var(--rose-light); font-size: 1rem; margin-left: 4px;
+    transition: color .15s;
+  }
+  .remove-btn:hover { color: var(--rose); }
+
+  /* ── CART FOOTER ── */
+  .cart-footer {
+    border-top: 1px solid var(--rose-pale);
+    padding: 16px 24px 24px;
+  }
+  .cart-min-notice {
+    background: #fff8e1;
+    border: 1px solid #ffe082;
+    border-radius: var(--radius-sm);
+    padding: 10px 14px;
+    font-size: .78rem; color: #7a5c00;
+    margin-bottom: 12px;
+    display: none;
+    align-items: center; gap: 6px;
+  }
+  .cart-min-notice.show { display: flex; }
+  .cart-total {
+    display: flex; justify-content: space-between;
+    font-weight: 600; color: var(--choco);
+    font-size: 1rem; margin-bottom: 14px;
+  }
+  .checkout-btn {
+    width: 100%;
+    background: linear-gradient(135deg, var(--choco), var(--choco-light));
+    color: white; border: none; cursor: pointer;
+    border-radius: var(--radius-sm);
+    padding: 14px;
+    font-family: 'Poppins', sans-serif;
+    font-size: .92rem; font-weight: 600;
+    transition: opacity .2s;
+    letter-spacing: .02em;
+  }
+  .checkout-btn:hover:not(:disabled) { opacity: .88; }
+  .checkout-btn:disabled { opacity: .45; cursor: not-allowed; }
+
+  /* ── MODAL CHECKOUT ── */
+  .modal-overlay {
+    position: fixed; inset: 0;
+    background: rgba(45,31,23,.55);
+    z-index: 300;
+    display: flex; align-items: center; justify-content: center;
+    padding: 20px;
+    opacity: 0; pointer-events: none; transition: opacity .3s;
+  }
+  .modal-overlay.open { opacity: 1; pointer-events: all; }
+  .modal {
+    background: var(--off-white);
+    border-radius: var(--radius);
+    width: 100%; max-width: 500px;
+    max-height: 90dvh; overflow-y: auto;
+    padding: 28px;
+    transform: scale(.95); transition: transform .3s;
+  }
+  .modal-overlay.open .modal { transform: scale(1); }
+  .modal h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem; color: var(--choco);
+    margin-bottom: 6px;
+  }
+  .modal-sub {
+    font-size: .8rem; color: var(--text-muted); margin-bottom: 20px;
+  }
+  .form-group { margin-bottom: 16px; }
+  .form-group label {
+    display: block;
+    font-size: .8rem; font-weight: 500;
+    color: var(--choco); margin-bottom: 6px;
+  }
+  .form-group input, .form-group textarea, .form-group select {
+    width: 100%;
+    background: white; border: 1.5px solid var(--rose-pale);
+    border-radius: var(--radius-sm);
+    padding: 10px 14px;
+    font-family: 'Poppins', sans-serif;
+    font-size: .88rem; color: var(--text);
+    outline: none; transition: border-color .2s;
+  }
+  .form-group input:focus, .form-group textarea:focus,
+  .form-group select:focus { border-color: var(--rose); }
+  .radio-group {
+    display: flex; gap: 10px; flex-wrap: wrap;
+  }
+  .radio-label {
+    flex: 1; min-width: 120px;
+    background: white; border: 1.5px solid var(--rose-pale);
+    border-radius: var(--radius-sm);
+    padding: 12px 14px; cursor: pointer;
+    font-size: .85rem; font-weight: 500;
+    color: var(--text-muted);
+    display: flex; align-items: center; gap: 8px;
+    transition: all .2s;
+  }
+  .radio-label input { display: none; }
+  .radio-label.selected {
+    border-color: var(--rose);
+    color: var(--rose);
+    background: var(--rose-pale);
+  }
+  .pix-box {
+    background: white;
+    border: 1.5px solid var(--rose-pale);
+    border-radius: var(--radius-sm);
+    padding: 16px;
+    text-align: center;
+    display: none;
+  }
+  .pix-box.show { display: block; }
+  .pix-key {
+    font-family: 'Poppins', sans-serif;
+    font-size: .9rem; font-weight: 600;
+    color: var(--choco);
+    background: var(--cream);
+    padding: 8px 14px;
+    border-radius: 6px;
+    display: inline-block; margin: 8px 0;
+    letter-spacing: .04em;
+  }
+  .copy-btn {
+    background: var(--rose-pale);
+    border: none; cursor: pointer;
+    color: var(--rose);
+    font-family: 'Poppins', sans-serif;
+    font-size: .78rem; font-weight: 600;
+    padding: 6px 14px; border-radius: 6px;
+    transition: background .2s;
+  }
+  .copy-btn:hover { background: var(--rose-light); color: white; }
+  .modal-divider {
+    border: none; border-top: 1px solid var(--rose-pale);
+    margin: 20px 0;
+  }
+  .order-summary-box {
+    background: white; border-radius: var(--radius-sm);
+    padding: 14px; margin-bottom: 18px;
+    border: 1px solid var(--rose-pale);
+  }
+  .order-summary-box .row {
+    display: flex; justify-content: space-between;
+    font-size: .82rem; padding: 3px 0;
+    color: var(--text-muted);
+  }
+  .order-summary-box .row.total {
+    font-weight: 600; color: var(--choco);
+    font-size: .92rem; border-top: 1px solid var(--rose-pale);
+    margin-top: 6px; padding-top: 8px;
+  }
+  .whatsapp-btn {
+    width: 100%;
+    background: #25d366;
+    color: white; border: none; cursor: pointer;
+    border-radius: var(--radius-sm);
+    padding: 14px;
+    font-family: 'Poppins', sans-serif;
+    font-size: .92rem; font-weight: 600;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    transition: opacity .2s;
+  }
+  .whatsapp-btn:hover { opacity: .88; }
+  .modal-close {
+    float: right; background: none; border: none; cursor: pointer;
+    font-size: 1.2rem; color: var(--text-muted); margin-top: -4px;
+  }
+
+  /* ── TOAST ── */
+  .toast {
+    position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%) translateY(80px);
+    background: var(--choco); color: white;
+    padding: 12px 22px; border-radius: 50px;
+    font-size: .85rem; font-weight: 500;
+    z-index: 400; transition: transform .35s cubic-bezier(.4,0,.2,1);
+    pointer-events: none; white-space: nowrap;
+  }
+  .toast.show { transform: translateX(-50%) translateY(0); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--choco);
+    color: rgba(255,255,255,.65);
+    text-align: center; padding: 28px 24px;
+    font-size: .78rem; font-weight: 300;
+  }
+  footer strong { color: white; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 480px) {
+    .products-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
+    .product-img { height: 130px; font-size: 52px; }
+    .hero { padding: 40px 16px 32px; }
+  }
+  @media (max-width: 340px) {
+    .products-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══ HEADER ═══ -->
+<header>
+  <div class="header-inner">
+    <a class="logo" href="#">
+      <div class="logo-icon">🎂</div>
+      <div>
+        <div class="logo-text">Formigota</div>
+        <div class="logo-sub">Bolos & Cupcakes</div>
+      </div>
+    </a>
+    <button class="cart-btn" onclick="toggleCart()">
+      🛒 Carrinho
+      <span class="cart-count hidden" id="cartCount">0</span>
+    </button>
+  </div>
+</header>
+
+<!-- ═══ HERO ═══ -->
+<section class="hero">
+  <h1>Feito com <em>amor</em><br>e muito açúcar</h1>
+  <p>Bolos artesanais, cupcakes decorados e doces que fazem qualquer dia especial.</p>
+  <span class="hero-badge">🚚 Entrega disponível + Retirada no local</span>
+</section>
+
+<!-- ═══ FILTROS ═══ -->
+<div class="filters" id="filters">
+    <button class="filter-btn active" onclick="filterProducts('todos', this)">Todos</button>
+    <button class="filter-btn" onclick="filterProducts('cookies', this)">🍪 Cookies</button>
+    <button class="filter-btn" onclick="filterProducts('doces', this)">🍬 Bolos no Pote & Doces</button>
+    <button class="filter-btn" onclick="filterProducts('bolos', this)">🍰 Fatias & Caseirinhos</button>
+    <button class="filter-btn" onclick="filterProducts('salgados', this)">🥐 Salgados Assados</button>
+    <button class="filter-btn" onclick="filterProducts('bebidas', this)">🥤 Bebidas</button>
+  </div>
+
+<!-- ═══ PRODUTOS ═══ -->
+<div class="products-wrap">
+  <div class="section-label" id="sectionLabel">Todos os produtos</div>
+  <div class="products-grid" id="productsGrid"></div>
+</div>
+
+<!-- ═══ FOOTER ═══ -->
+<footer>
+  <strong>Formigota – Bolos & Cupcakes</strong><br>
+  Feito com carinho 🍓 Encomendas via WhatsApp
+</footer>
+
+<!-- ═══ OVERLAY ═══ -->
+<div class="overlay" id="overlay" onclick="closeAll()"></div>
+
+<!-- ═══ CARRINHO LATERAL ═══ -->
+<div class="cart-panel" id="cartPanel">
+  <div class="cart-header">
+    <h2>Seu Pedido 🛒</h2>
+    <button class="close-btn" onclick="toggleCart()">✕</button>
+  </div>
+  <div class="cart-items" id="cartItems">
+    <div class="cart-empty">
+      <div class="big">🛒</div>
+      <p>Seu carrinho está vazio.<br>Adicione algo gostoso!</p>
+    </div>
+  </div>
+  <div class="cart-footer">
+    <div class="cart-min-notice" id="cartMinNotice">
+      ⚠️ Pedido mínimo de R$ 20,00 para finalizar.
+    </div>
+    <div class="cart-total">
+      <span>Total</span>
+      <span id="cartTotal">R$ 0,00</span>
+    </div>
+    <button class="checkout-btn" id="checkoutBtn" onclick="openCheckout()" disabled>
+      Finalizar Pedido →
+    </button>
+  </div>
+</div>
+
+<!-- ═══ MODAL CHECKOUT ═══ -->
+<div class="modal-overlay" id="checkoutModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeCheckout()">✕</button>
+    <h2>Finalizar Pedido</h2>
+    <p class="modal-sub">Preencha os dados abaixo para confirmar.</p>
+
+    <!-- Nome -->
+    <div class="form-group">
+      <label>Seu nome *</label>
+      <input type="text" id="clientName" placeholder="Ex: Maria Silva">
+    </div>
+
+    <!-- Entrega ou Retirada -->
+    <div class="form-group">
+      <label>Tipo de entrega *</label>
+      <div class="radio-group">
+        <label class="radio-label selected" id="lblRetirada" onclick="setDelivery('retirada')">
+          <input type="radio" name="delivery" value="retirada" checked>
+          🏠 Retirada
+        </label>
+        <label class="radio-label" id="lblEntrega" onclick="setDelivery('entrega')">
+          <input type="radio" name="delivery" value="entrega">
+          🚚 Entrega (+R$ 5,00)
+        </label>
+      </div>
+    </div>
+    <div class="form-group" id="addressGroup" style="display:none">
+      <label>Endereço completo *</label>
+      <input type="text" id="addressInput" placeholder="Rua, número, bairro, complemento">
+    </div>
+
+    <!-- Pagamento -->
+    <div class="form-group">
+      <label>Forma de pagamento *</label>
+      <div class="radio-group">
+        <label class="radio-label selected" id="lblPix" onclick="setPayment('pix')">
+          <input type="radio" name="payment" value="pix" checked>
+          💠 PIX
+        </label>
+        <label class="radio-label" id="lblCartao" onclick="setPayment('cartao')">
+          <input type="radio" name="payment" value="cartao">
+          💳 Cartão
+        </label>
+        <label class="radio-label" id="lblDinheiro" onclick="setPayment('dinheiro')">
+          <input type="radio" name="payment" value="dinheiro">
+          💵 Dinheiro
+        </label>
+      </div>
+    </div>
+
+    <!-- PIX -->
+    <div class="pix-box show" id="pixBox">
+      <div style="font-size:.78rem;color:var(--text-muted)">Chave PIX (celular)</div>
+      <div class="pix-key" id="pixKey">+55 13 98164-2158</div><br>
+      <button class="copy-btn" onclick="copyPix()">📋 Copiar chave</button>
+      <div style="font-size:.72rem;color:var(--text-muted);margin-top:8px">
+        Envie o comprovante pelo WhatsApp após o pagamento.
+      </div>
+    </div>
+
+    <!-- Troco (dinheiro) -->
+    <div class="form-group" id="trocoGroup" style="display:none">
+      <label>Troco para quanto? (opcional)</label>
+      <input type="text" id="trocoInput" placeholder="Ex: R$ 100,00">
+    </div>
+
+    <!-- Observações -->
+    <div class="form-group">
+      <label>Observações (opcional)</label>
+      <textarea id="obsInput" rows="2" placeholder="Algum recheio especial, restrição, etc."></textarea>
+    </div>
+
+    <hr class="modal-divider">
+
+    <!-- Resumo -->
+    <div class="order-summary-box" id="orderSummary"></div>
+
+    <!-- Botão WhatsApp -->
+    <button class="whatsapp-btn" onclick="sendWhatsApp()">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.999-1.312A9.96 9.96 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18a8 8 0 01-4.076-1.115l-.292-.173-3.032.795.809-2.958-.19-.304A7.969 7.969 0 014 12c0-4.418 3.582-8 8-8s8 3.582 8 8-3.582 8-8 8z"/></svg>
+      Confirmar via WhatsApp
+    </button>
+  </div>
+</div>
+
+<!-- ═══ TOAST ═══ -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ══════════════════════════════════════════════
+//  BASE DE PRODUTOS
+//  ✅ 3 produtos de exemplo cadastrados abaixo.
+//  📌 PARA ADICIONAR MAIS PRODUTOS, cole os
+//     novos objetos logo após o último item desta
+//     lista (antes do fechamento do colchete ].
+//  Formato de cada produto:
+//  {
+//    id: número único,
+//    nome: "Nome do Produto",
+//    desc: "Descrição curta",
+//    preco: valor numérico (ex: 45.00),
+//    categoria: "bolos" | "cupcakes" | "doces",
+//    emoji: "🎂",
+//    tag: "Destaque"  ← opcional
+//  }
+// ══════════════════════════════════════════════
+const produtos = [
+  // 🍪 COOKIES ARTESANAIS
+  {
+    id: 1,
+    nome: "Cookie Tradicional com Gotas de Chocolate Nobre",
+    desc: "Cookie crocante por fora e macio por dentro com gotas puras de chocolate.",
+    preco: 19.90,
+    categoria: "cookies",
+    emoji: "🍪",
+    tag: "Artesanal"
+  },
+  {
+    id: 2,
+    nome: "Cookie Recheado com Nutella",
+    desc: "Chocolate nobre ao leite e meio amargo, com recheio generoso de Nutella.",
+    preco: 22.90,
+    categoria: "cookies",
+    emoji: "🍪",
+    tag: "Mais Vendido"
+  },
+
+  // 🍬 BOLO NO POTE / DOCES
+  {
+    id: 3,
+    nome: "Red Velvet no Pote Irresistível!",
+    desc: "Camadas de massa macia e aveludada, recheadas com brigadeiro de cream cheese super cremoso e geleia artesanal de frutas.",
+    preco: 25.90,
+    categoria: "doces",
+    emoji: "🍰",
+    tag: "Premium"
+  },
+  {
+    id: 4,
+    nome: "Bolo no Pote Brigadeiro Chocolate e Brigadeiro de Ninho",
+    desc: "Massa branca com brigadeiro nobre e brigadeiro de Ninho.",
+    preco: 23.90,
+    categoria: "doces",
+    emoji: "🥛",
+    tag: "Favorito"
+  },
+  {
+    id: 5,
+    nome: "Bolo no Pote Brigadeiro de Ninho com Morango",
+    desc: "Massa branca com o clássico e delicioso recheio de brigadeiro de Ninho com morangos frescos.",
+    preco: 23.90,
+    categoria: "doces",
+    emoji: "🍓",
+    tag: null
+  },
+  {
+    id: 6,
+    nome: "Bolo no Pote Brigadeiro de Ninho com Nutella",
+    desc: "Massa branca com a combinação perfeita de Ninho cremoso e Nutella pura.",
+    preco: 25.90,
+    categoria: "doces",
+    emoji: "🍫",
+    tag: null
+  },
+  {
+    id: 7,
+    nome: "Brigadeiro de Doce de Leite com Ameixa",
+    desc: "Bolo no pote com massa branca e recheio tradicional de doce de leite com ameixas selecionadas.",
+    preco: 25.90,
+    categoria: "doces",
+    emoji: "🍯",
+    tag: null
+  },
+  {
+    id: 8,
+    nome: "Surpresa de Uva",
+    desc: "Creme branco, uva sem semente, mais creme branco e finalizado com ganache de chocolate meio amargo.",
+    preco: 25.90,
+    categoria: "doces",
+    emoji: "🍇",
+    tag: "Gelado"
+  },
+  {
+    id: 9,
+    nome: "Torta Gelada de Maracujá",
+    desc: "Base feita de bolacha Oreo, mousse de maracujá, mousse de chocolate finalizado com geleia artesanal de maracujá.",
+    preco: 25.90,
+    categoria: "doces",
+    emoji: "🟡",
+    tag: "Especial"
+  },
+  {
+    id: 10,
+    nome: "Caixinha Presenteável Brigadeiro Gourmet (4 un)",
+    desc: "4 unidades de chocolate belga ao leite e cacau 50%, finalizado com granulado ao leite belga.",
+    preco: 33.00,
+    categoria: "doces",
+    emoji: "🎁",
+    tag: "Presente"
+  },
+  {
+    id: 11,
+    nome: "Beijinho Gourmet",
+    desc: "Doce tradicional de coco com receitas e técnicas gourmet para máxima cremosidade. Unidade.",
+    preco: 6.90,
+    categoria: "doces",
+    emoji: "🥥",
+    tag: null
+  },
+  {
+    id: 12,
+    nome: "Dupla Mousse de Chocolate",
+    desc: "Mousse de chocolate extremamente cremoso (kit contendo 2 potinhos).",
+    preco: 24.90,
+    categoria: "doces",
+    emoji: "🤎",
+    tag: "Dose Dupla"
+  },
+  {
+    id: 13,
+    nome: "Dupla Mousse de Maracujá",
+    desc: "Mousse de maracujá aerado e refrescante (kit contendo 2 potinhos).",
+    preco: 24.90,
+    categoria: "doces",
+    emoji: "💛",
+    tag: "Dose Dupla"
+  },
+  {
+    id: 14,
+    nome: "Pudim de Leite Condensado Artesanal",
+    desc: "Pudim ultra cremoso e lisinho com calda de caramelo na medida certa.",
+    preco: 19.90,
+    categoria: "doces",
+    emoji: "🍮",
+    tag: "Clássico"
+  },
+
+  // 🍰 FATIAS E CASEIRINHOS
+  {
+    id: 15,
+    nome: "Fat Slice Cake Especial de Cheesecake",
+    desc: "Fatia de bolo com deliciosa geleia artesanal de frutas vermelhas e cobertura de chantininho.",
+    preco: 29.90,
+    categoria: "bolos",
+    emoji: "🍰",
+    tag: "Sucesso"
+  },
+  {
+    id: 16,
+    nome: "Fat Slice Cake Especial de Pistache",
+    desc: "Fatia premium com creme de pistache, geleia de frutas vermelhas e chantininho.",
+    preco: 29.90,
+    categoria: "bolos",
+    emoji: "💚",
+    tag: "Novidade"
+  },
+  {
+    id: 17,
+    nome: "Fatia de Bolo de Cenoura com Chocolate",
+    desc: "A combinação mais amada: bolo fofinho de cenoura com cobertura generosa de chocolate.",
+    preco: 13.90,
+    categoria: "bolos",
+    emoji: "🥕",
+    tag: null
+  },
+  {
+    id: 18,
+    nome: "Bolo Caseirinho de Chocolate com Calda",
+    desc: "Bolo caseiro inteiro de chocolate com muita calda cremosa por cima.",
+    preco: 34.00,
+    categoria: "bolos",
+    emoji: "💝",
+    tag: "Para Compartilhar"
+  },
+  {
+    id: 19,
+    nome: "Bolo Caseirinho de Maracujá",
+    desc: "Bolo fofinho, fresquinho e artesanal com uma calda cremosa de maracujá.",
+    preco: 38.00,
+    categoria: "bolos",
+    emoji: "✨",
+    tag: "Caseiro"
+  },
+
+  // 🥐 SALGADOS ASSADOS
+  {
+    id: 20,
+    nome: "Porção de Mini Pão de Queijo (6 un)",
+    desc: "Porção com 6 unidades de pão de queijo assados na hora, crocantes e macios.",
+    preco: 16.90,
+    categoria: "salgados",
+    emoji: "🧀",
+    tag: "Quentinho"
+  },
+  {
+    id: 21,
+    nome: "Quiche de Queijo",
+    desc: "Massa podre leve que derrete na boca com recheio cremoso de queijos selecionados.",
+    preco: 18.50,
+    categoria: "salgados",
+    emoji: "🥧",
+    tag: null
+  },
+  {
+    id: 22,
+    nome: "Croissant de Frango com Massa Folheada",
+    desc: "Tradicional massa folheada leve e amanteigada com recheio caprichado de frango.",
+    preco: 18.50,
+    categoria: "salgados",
+    emoji: "🥐",
+    tag: "Lanche"
+  },
+
+  // 🥤 BEBIDAS GELADAS
+  {
+    id: 23,
+    nome: "Água Mineral Crystal 500ml",
+    desc: "Água mineral natural sem gás.",
+    preco: 6.50,
+    categoria: "bebidas",
+    emoji: "💧",
+    tag: null
+  },
+  {
+    id: 24,
+    nome: "Água Crystal com Gás 500ml",
+    desc: "Água mineral natural com gás refrescante.",
+    preco: 8.90,
+    categoria: "bebidas",
+    emoji: "🫧",
+    tag: null
+  },
+  {
+    id: 25,
+    nome: "Coca Cola Pet Mini 200 Ml",
+    desc: "Sabor original em garrafa pet miniatura, gelada na medida.",
+    preco: 5.90,
+    categoria: "bebidas",
+    emoji: "🥤",
+    tag: null
+  },
+  {
+    id: 26,
+    nome: "Bebida Nescau Pronto 200ml",
+    desc: "Achocolatado Nescau pronto para consumo, ideal para acompanhar seu doce.",
+    preco: 6.50,
+    categoria: "bebidas",
+    emoji: "🧃",
+    tag: null
+  },
+  {
+    id: 27,
+    nome: "Refrigerante Guaraná Antarctica Lata 350ml",
+    desc: "Lata trincando de gelada do clássico guaraná.",
+    preco: 9.99,
+    categoria: "bebidas",
+    emoji: "🟢",
+    tag: null
+  },
+  {
+    id: 28,
+    nome: "Refrigerante Fanta Laranja Lata 350ml",
+    desc: "Lata de refrigerante sabor fanta laranja bem gelada.",
+    preco: 9.99,
+    categoria: "bebidas",
+    emoji: "🟠",
+    tag: null
+  }
+];
+// ══════════════════════════════════════════════
+
+// ── ESTADO ──
+let cart = {};
+let deliveryType = 'retirada';
+let paymentType = 'pix';
+const DELIVERY_FEE = 5.00;
+const MIN_ORDER = 20.00;
+const WA_NUMBER = '5513981642158';
+
+// ── RENDER PRODUTOS ──
+function renderProducts(filter = 'todos') {
+  const grid = document.getElementById('productsGrid');
+  const label = document.getElementById('sectionLabel');
+  const filtered = filter === 'todos' ? produtos : produtos.filter(p => p.categoria === filter);
+  const labels = { todos: 'Todos os produtos', cookies: '🍪 Cookies Artesanais', doces: '🍬 Bolos no Pote e Doces', bolos: '🍰 Fatias e Caseirinhos', salgados: '🥐 Salgados Assados', bebidas: '🥤 Bebidas Geladas' };
+  label.textContent = labels[filter] || 'Produtos';
+  grid.innerHTML = filtered.map(p => `
+    <div class="product-card">
+      <div class="product-img" style="background:${bgColor(p.categoria)}">
+        ${p.tag ? `<div class="product-tag">${p.tag}</div>` : ''}
+        ${p.emoji}
+      </div>
+      <div class="product-body">
+        <div class="product-name">${p.nome}</div>
+        <div class="product-desc">${p.desc}</div>
+        <div class="product-footer">
+          <div class="product-price">
+            R$ ${p.preco.toFixed(2).replace('.',',')}
+            ${p.categoria==='cupcakes'||p.categoria==='doces'?'<span>/ un.</span>':''}
+          </div>
+          <button class="add-btn" onclick="addToCart(${p.id})">+ Adicionar</button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function bgColor(cat) {
+  const m = { bolos: 'linear-gradient(135deg,#f5dde0,#e8b4b8)', cupcakes: 'linear-gradient(135deg,#fdf3e0,#f5ddb8)', doces: 'linear-gradient(135deg,#e0f5ea,#b8e8c8)' };
+  return m[cat] || '#f5efe8';
+}
+
+function filterProducts(cat, btn) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderProducts(cat);
+}
+
+// ── CARRINHO ──
+function addToCart(id) {
+  const p = produtos.find(x => x.id === id);
+  if (!p) return;
+  cart[id] = cart[id] ? { ...cart[id], qty: cart[id].qty + 1 } : { ...p, qty: 1 };
+  updateCartUI();
+  showToast(`${p.emoji} ${p.nome} adicionado!`);
+}
+
+function changeQty(id, delta) {
+  if (!cart[id]) return;
+  cart[id].qty += delta;
+  if (cart[id].qty <= 0) delete cart[id];
+  updateCartUI();
+}
+
+function removeFromCart(id) {
+  delete cart[id];
+  updateCartUI();
+}
+
+function getSubtotal() {
+  return Object.values(cart).reduce((s, i) => s + i.preco * i.qty, 0);
+}
+
+function getTotal() {
+  return getSubtotal() + (deliveryType === 'entrega' ? DELIVERY_FEE : 0);
+}
+
+function updateCartUI() {
+  const items = Object.values(cart);
+  const totalQty = items.reduce((s, i) => s + i.qty, 0);
+  const subtotal = getSubtotal();
+
+  // badge
+  const badge = document.getElementById('cartCount');
+  badge.textContent = totalQty;
+  badge.classList.toggle('hidden', totalQty === 0);
+
+  // items list
+  const el = document.getElementById('cartItems');
+  if (items.length === 0) {
+    el.innerHTML = `<div class="cart-empty"><div class="big">🛒</div><p>Seu carrinho está vazio.<br>Adicione algo gostoso!</p></div>`;
+  } else {
+    el.innerHTML = items.map(i => `
+      <div class="cart-item">
+        <div class="ci-icon">${i.emoji}</div>
+        <div class="ci-info">
+          <div class="ci-name">${i.nome}</div>
+          <div class="ci-price">R$ ${(i.preco * i.qty).toFixed(2).replace('.',',')}</div>
+        </div>
+        <div class="ci-controls">
+          <button class="qty-btn" onclick="changeQty(${i.id},-1)">−</button>
+          <span class="qty-num">${i.qty}</span>
+          <button class="qty-btn" onclick="changeQty(${i.id},1)">+</button>
+          <button class="remove-btn" onclick="removeFromCart(${i.id})">🗑</button>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  // total
+  document.getElementById('cartTotal').textContent = `R$ ${subtotal.toFixed(2).replace('.',',')}`;
+
+  // aviso pedido mínimo
+  const notice = document.getElementById('cartMinNotice');
+  const btn = document.getElementById('checkoutBtn');
+  const aboveMin = subtotal >= MIN_ORDER;
+  notice.classList.toggle('show', items.length > 0 && !aboveMin);
+  btn.disabled = !aboveMin || items.length === 0;
+}
+
+function toggleCart() {
+  const panel = document.getElementById('cartPanel');
+  const overlay = document.getElementById('overlay');
+  const isOpen = panel.classList.contains('open');
+  panel.classList.toggle('open', !isOpen);
+  overlay.classList.toggle('open', !isOpen);
+}
+
+function closeAll() {
+  document.getElementById('cartPanel').classList.remove('open');
+  document.getElementById('overlay').classList.remove('open');
+  document.getElementById('checkoutModal').classList.remove('open');
+}
+
+// ── CHECKOUT ──
+function openCheckout() {
+  updateOrderSummary();
+  document.getElementById('checkoutModal').classList.add('open');
+  document.getElementById('cartPanel').classList.remove('open');
+}
+
+function closeCheckout() {
+  document.getElementById('checkoutModal').classList.remove('open');
+  document.getElementById('overlay').classList.remove('open');
+}
+
+function setDelivery(type) {
+  deliveryType = type;
+  document.getElementById('lblRetirada').classList.toggle('selected', type === 'retirada');
+  document.getElementById('lblEntrega').classList.toggle('selected', type === 'entrega');
+  document.getElementById('addressGroup').style.display = type === 'entrega' ? 'block' : 'none';
+  updateCartUI();
+  updateOrderSummary();
+}
+
+function setPayment(type) {
+  paymentType = type;
+  ['pix','cartao','dinheiro'].forEach(t => {
+    document.getElementById('lbl' + t.charAt(0).toUpperCase() + t.slice(1)).classList.toggle('selected', t === type);
+  });
+  document.getElementById('pixBox').classList.toggle('show', type === 'pix');
+  document.getElementById('trocoGroup').style.display = type === 'dinheiro' ? 'block' : 'none';
+}
+
+function updateOrderSummary() {
+  const items = Object.values(cart);
+  const subtotal = getSubtotal();
+  const fee = deliveryType === 'entrega' ? DELIVERY_FEE : 0;
+  const total = subtotal + fee;
+  const rows = items.map(i => `
+    <div class="row"><span>${i.qty}× ${i.nome}</span><span>R$ ${(i.preco * i.qty).toFixed(2).replace('.',',')}</span></div>
+  `).join('');
+  const feeRow = fee > 0 ? `<div class="row"><span>Taxa de entrega</span><span>R$ ${fee.toFixed(2).replace('.',',')}</span></div>` : '';
+  document.getElementById('orderSummary').innerHTML = rows + feeRow +
+    `<div class="row total"><span>Total</span><span>R$ ${total.toFixed(2).replace('.',',')}</span></div>`;
+}
+
+function copyPix() {
+  const key = document.getElementById('pixKey').textContent.replace(/\s/g,'');
+  navigator.clipboard.writeText(key).then(() => showToast('✅ Chave PIX copiada!'));
+}
+
+function sendWhatsApp() {
+  const name = document.getElementById('clientName').value.trim();
+  const address = document.getElementById('addressInput').value.trim();
+  const obs = document.getElementById('obsInput').value.trim();
+  const troco = document.getElementById('trocoInput').value.trim();
+
+  if (!name) { showToast('⚠️ Informe seu nome!'); return; }
+  if (deliveryType === 'entrega' && !address) { showToast('⚠️ Informe o endereço de entrega!'); return; }
+
+  const items = Object.values(cart);
+  const subtotal = getSubtotal();
+  const fee = deliveryType === 'entrega' ? DELIVERY_FEE : 0;
+  const total = subtotal + fee;
+
+  const payLabels = { pix: 'PIX', cartao: 'Cartão', dinheiro: 'Dinheiro' };
+
+  let msg = `🎂 *Pedido – Formigota*\n\n`;
+  msg += `👤 *Cliente:* ${name}\n`;
+  msg += `📦 *Entrega:* ${deliveryType === 'entrega' ? `Entrega – ${address}` : 'Retirada no local'}\n`;
+  msg += `💳 *Pagamento:* ${payLabels[paymentType]}`;
+  if (paymentType === 'dinheiro' && troco) msg += ` (troco para ${troco})`;
+  msg += `\n\n🛒 *Itens:*\n`;
+  items.forEach(i => {
+    msg += `• ${i.qty}× ${i.nome} – R$ ${(i.preco * i.qty).toFixed(2).replace('.',',')}\n`;
+  });
+  if (fee > 0) msg += `\n🚚 Taxa de entrega: R$ ${fee.toFixed(2).replace('.',',')}`;
+  msg += `\n💰 *Total: R$ ${total.toFixed(2).replace('.',',')}*`;
+  if (obs) msg += `\n\n📝 *Obs:* ${obs}`;
+
+  const url = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`;
+  window.open(url, '_blank');
+}
+
+// ── TOAST ──
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2400);
+}
+
+// ── INIT ──
+renderProducts();
+updateCartUI();
+</script>
+</body>
+</html>
