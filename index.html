@@ -509,13 +509,88 @@
   footer strong { color: white; }
 
   /* ── RESPONSIVE ── */
+ /* ── OTIMIZAÇÃO COMPLETA PARA CELULAR ── */
   @media (max-width: 480px) {
-    .products-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
-    .product-img { height: 130px; font-size: 52px; }
-    .hero { padding: 40px 16px 32px; }
-  }
-  @media (max-width: 340px) {
-    .products-grid { grid-template-columns: 1fr; }
+    .hero {
+      padding: 32px 16px 24px;
+    }
+    .hero h1 {
+      font-size: 1.8rem;
+    }
+    .hero p {
+      font-size: 0.85rem;
+      padding: 0 8px;
+    }
+    .filters-wrap {
+      padding: 16px 12px 0;
+    }
+    .filter-btn {
+      padding: 6px 14px;
+      font-size: 0.78rem;
+    }
+    .products-wrap {
+      padding: 16px 12px 40px;
+    }
+    .section-label {
+      font-size: 0.68rem;
+      margin-bottom: 12px;
+    }
+    /* Organiza em 2 colunas simétricas sem esmagar */
+    .products-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+    .product-card {
+      border-radius: 12px;
+    }
+    .product-img {
+      height: 110px;
+      font-size: 44px;
+    }
+    .product-body {
+      padding: 10px;
+    }
+    .product-name {
+      font-size: 0.85rem;
+      line-height: 1.2;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      height: 32px; /* Garante que os títulos alinhem mesmo com tamanhos diferentes */
+    }
+    .product-desc {
+      font-size: 0.7rem;
+      line-height: 1.4;
+      margin-top: 4px;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      height: 30px; /* Limita a descrição para não quebrar o tamanho dos cards */
+    }
+    .product-footer {
+      margin-top: 10px;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 8px;
+    }
+    .product-price {
+      font-size: 0.95rem;
+      text-align: center;
+    }
+    .add-btn {
+      width: 100%;
+      padding: 6px;
+      font-size: 0.75rem;
+      text-align: center;
+    }
+    /* Ajuste para telas muito pequenas */
+    @media (max-width: 350px) {
+      .products-grid {
+        grid-template-columns: 1fr;
+      }
+    }
   }
 </style>
 </head>
